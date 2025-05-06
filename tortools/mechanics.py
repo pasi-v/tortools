@@ -10,6 +10,7 @@ class SkillTestResult:
     """Result of a skill test in The One Ring RPG."""
     success: bool
     roll: int
+    feat_roll: int
     target_number: int
     skill_rating: int
     advantage: bool
@@ -23,6 +24,11 @@ class SkillTestResult:
 def roll_d6() -> int:
     """Roll a single d6."""
     return random.randint(1, 6)
+
+
+def roll_d12() -> int:
+    """Roll a single d12."""
+    return random.randint(1, 12)
 
 
 def roll_skill_test(skill_rating: int, target_number: int, 
@@ -49,7 +55,7 @@ def roll_skill_test(skill_rating: int, target_number: int,
     skill_roll = roll_d6()
     
     # Roll the feat dice (d12)
-    feat_roll = roll_d6()  # TODO: Replace with d12 when implemented
+    feat_roll = roll_d12()
     
     # Apply advantage/disadvantage
     if advantage and disadvantage:
@@ -68,8 +74,8 @@ def roll_skill_test(skill_rating: int, target_number: int,
     total = skill_roll + skill_rating
     
     # Check for special results
-    gandalf_rune = skill_roll == 6 and feat_roll == 12  # TODO: Update when d12 is implemented
-    sauron_rune = skill_roll == 1 and feat_roll == 1    # TODO: Update when d12 is implemented
+    gandalf_rune = skill_roll == 6 and feat_roll == 12
+    sauron_rune = skill_roll == 1 and feat_roll == 1
     
     # Determine success level
     success = total >= target_number
@@ -79,6 +85,7 @@ def roll_skill_test(skill_rating: int, target_number: int,
     return SkillTestResult(
         success=success,
         roll=skill_roll,
+        feat_roll=feat_roll,
         target_number=target_number,
         skill_rating=skill_rating,
         advantage=advantage,

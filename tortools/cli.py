@@ -29,7 +29,8 @@ def resolve_action(skill: int, tn: int, advantage: bool, disadvantage: bool):
         
         # Add rows to the table
         table.add_row("Success", "Yes" if result.success else "No")
-        table.add_row("Roll", str(result.roll))
+        table.add_row("Skill Roll", str(result.roll))
+        table.add_row("Feat Roll", str(result.feat_roll))
         table.add_row("Total", str(result.roll + result.skill_rating))
         table.add_row("Target Number", str(result.target_number))
         table.add_row("Skill Rating", str(result.skill_rating))

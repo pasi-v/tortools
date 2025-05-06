@@ -1,7 +1,7 @@
 """Tests for the game mechanics module."""
 
 import pytest
-from tortools.mechanics import roll_skill_test, SkillTestResult
+from tortools.mechanics import roll_skill_test, SkillTestResult, roll_d12
 
 
 def test_skill_rating_validation():
@@ -80,4 +80,29 @@ def test_special_successes():
     # Test extraordinary success
     result = roll_skill_test(3, 10)
     if result.roll + result.skill_rating >= 22:  # TN + 12
-        assert result.extraordinary_success 
+        assert result.extraordinary_success
+
+
+def test_d12_roll():
+    """Test that d12 rolls are within valid range."""
+    for _ in range(100):  # Test multiple rolls
+        roll = roll_d12()
+        assert 1 <= roll <= 12
+
+
+def test_feat_die_in_skill_test():
+    """Test that feat die (d12) is properly used in skill tests."""
+    result = roll_skill_test(3, 10)
+    assert 1 <= result.feat_roll <= 12
+
+
+def test_special_results():
+    """Test that special results (Gandalf/Sauron runes) are properly detected."""
+    # We need to mock the random rolls to test this reliably
+    # For now, we'll just verify the properties exist and are boolean
+    result = roll_skill_test(3, 10)
+    assert isinstance(result.gandalf_rune, bool)
+    assert isinstance(result.sauron_rune, bool)
+    
+    # Test that they can't both be true at the same time
+    assert not (result.gandalf_rune and result.sauron_rune) 
