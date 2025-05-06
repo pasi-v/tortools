@@ -91,6 +91,27 @@ poetry run tortools resolve-action --help
    poetry run mypy .
    ```
 
+### Dependency Management
+
+This project uses Poetry for dependency management. The dependencies are specified in `pyproject.toml`, and the exact versions are locked in `poetry.lock`.
+
+When adding or updating dependencies:
+
+1. Update dependencies in `pyproject.toml`
+2. Update the lock file:
+   ```bash
+   poetry lock
+   ```
+3. Install the updated dependencies:
+   ```bash
+   poetry install
+   ```
+
+The lock file ensures that:
+- Everyone uses the same dependency versions
+- Builds are reproducible
+- CI environments match local development environments
+
 ### Testing
 
 The project uses pytest for testing. Tests are located in the `tests/` directory and follow these conventions:
@@ -112,7 +133,7 @@ poetry run pytest -v
 poetry run pytest tests/test_mechanics.py
 
 # Run tests with coverage report
-poetry run pytest --cov=tortools
+poetry run pytest
 ```
 
 The test suite includes:
