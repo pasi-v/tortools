@@ -71,28 +71,53 @@ poetry run tortools resolve-action --help
 
 ## Development
 
-To set up the development environment:
+### Setting Up the Development Environment
 
 1. Install development dependencies:
    ```bash
    poetry install --with dev
    ```
 
-2. Run tests:
-   ```bash
-   poetry run pytest
-   ```
-
-3. Format code:
+2. Format code:
    ```bash
    poetry run black .
    poetry run isort .
    ```
 
-4. Type checking:
+3. Type checking:
    ```bash
    poetry run mypy .
    ```
+
+### Testing
+
+The project uses pytest for testing. Tests are located in the `tests/` directory and follow these conventions:
+
+- `test_*.py` files contain test cases
+- `conftest.py` contains shared test fixtures
+- Tests use a fixed random seed for reproducibility
+
+To run the tests:
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run tests with verbose output
+poetry run pytest -v
+
+# Run a specific test file
+poetry run pytest tests/test_mechanics.py
+
+# Run tests with coverage report
+poetry run pytest --cov=tortools
+```
+
+The test suite includes:
+- Input validation tests
+- Game mechanics tests
+- Edge case handling
+- Success/failure scenarios
 
 ## Project Structure
 
@@ -100,7 +125,12 @@ To set up the development environment:
 tortools/
 ├── tortools/
 │   ├── __init__.py
-│   └── cli.py
+│   ├── cli.py          # Command-line interface
+│   └── mechanics.py    # Core game mechanics
+├── tests/
+│   ├── __init__.py
+│   ├── conftest.py     # Test configuration
+│   └── test_mechanics.py
 ├── pyproject.toml
 ├── setup.sh
 └── README.md
