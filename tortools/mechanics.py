@@ -1,13 +1,14 @@
 """Game mechanics for The One Ring RPG."""
 
+import random
 from dataclasses import dataclass
 from typing import Optional, Tuple
-import random
 
 
 @dataclass
 class SkillTestResult:
     """Result of a skill test in The One Ring RPG."""
+
     success: bool
     roll: int
     feat_roll: int
@@ -31,32 +32,36 @@ def roll_d12() -> int:
     return random.randint(1, 12)
 
 
-def roll_skill_test(skill_rating: int, target_number: int, 
-                   advantage: bool = False, disadvantage: bool = False) -> SkillTestResult:
+def roll_skill_test(
+    skill_rating: int,
+    target_number: int,
+    advantage: bool = False,
+    disadvantage: bool = False,
+) -> SkillTestResult:
     """
     Resolve a skill test in The One Ring RPG.
-    
+
     Args:
         skill_rating: The character's skill rating (1-6)
         target_number: The target number for the test
         advantage: Whether the character has advantage
         disadvantage: Whether the character has disadvantage
-    
+
     Returns:
         SkillTestResult containing the test outcome and details
     """
     if not 1 <= skill_rating <= 6:
         raise ValueError("Skill rating must be between 1 and 6")
-    
+
     if target_number < 1:
         raise ValueError("Target number must be positive")
-    
+
     # Roll the skill dice (d6)
     skill_roll = roll_d6()
-    
+
     # Roll the feat dice (d12)
     feat_roll = roll_d12()
-    
+
     # Apply advantage/disadvantage
     if advantage and disadvantage:
         # They cancel each other out
@@ -69,19 +74,19 @@ def roll_skill_test(skill_rating: int, target_number: int,
         # Roll an additional skill die and take the worst
         second_roll = roll_d6()
         skill_roll = min(skill_roll, second_roll)
-    
+
     # Calculate total
     total = skill_roll + skill_rating
-    
+
     # Check for special results
     gandalf_rune = skill_roll == 6 and feat_roll == 12
     sauron_rune = skill_roll == 1 and feat_roll == 1
-    
+
     # Determine success level
     success = total >= target_number
     great_success = success and (total >= target_number + 6)
     extraordinary_success = success and (total >= target_number + 12)
-    
+
     return SkillTestResult(
         success=success,
         roll=skill_roll,
@@ -93,5 +98,5 @@ def roll_skill_test(skill_rating: int, target_number: int,
         great_success=great_success,
         extraordinary_success=extraordinary_success,
         gandalf_rune=gandalf_rune,
-        sauron_rune=sauron_rune
-    ) 
+        sauron_rune=sauron_rune,
+    )

@@ -1,7 +1,8 @@
 """Tests for the game mechanics module."""
 
 import pytest
-from tortools.mechanics import roll_skill_test, SkillTestResult, roll_d12
+
+from tortools.mechanics import SkillTestResult, roll_d12, roll_skill_test
 
 
 def test_skill_rating_validation():
@@ -11,7 +12,7 @@ def test_skill_rating_validation():
         result = roll_skill_test(skill, 10)
         assert isinstance(result, SkillTestResult)
         assert result.skill_rating == skill
-    
+
     # Test invalid skill ratings
     with pytest.raises(ValueError):
         roll_skill_test(0, 10)
@@ -28,7 +29,7 @@ def test_target_number_validation():
         result = roll_skill_test(3, tn)
         assert isinstance(result, SkillTestResult)
         assert result.target_number == tn
-    
+
     # Test invalid target numbers
     with pytest.raises(ValueError):
         roll_skill_test(3, 0)
@@ -43,12 +44,12 @@ def test_advantage_disadvantage():
     assert isinstance(result, SkillTestResult)
     assert result.advantage
     assert result.disadvantage
-    
+
     # Test advantage
     result = roll_skill_test(3, 10, advantage=True)
     assert result.advantage
     assert not result.disadvantage
-    
+
     # Test disadvantage
     result = roll_skill_test(3, 10, disadvantage=True)
     assert not result.advantage
@@ -60,11 +61,11 @@ def test_success_calculation():
     # Test with minimum required roll
     result = roll_skill_test(3, 10)
     assert result.success == (result.roll + result.skill_rating >= 10)
-    
+
     # Test with guaranteed success (skill 6 + minimum roll 1 = 7, which is >= TN 6)
     result = roll_skill_test(6, 6)
     assert result.success
-    
+
     # Test with guaranteed failure (skill 1 + maximum roll 6 = 7, which is < TN 8)
     result = roll_skill_test(1, 8)
     assert not result.success
@@ -76,7 +77,7 @@ def test_special_successes():
     result = roll_skill_test(3, 10)
     if result.roll + result.skill_rating >= 16:  # TN + 6
         assert result.great_success
-    
+
     # Test extraordinary success
     result = roll_skill_test(3, 10)
     if result.roll + result.skill_rating >= 22:  # TN + 12
@@ -103,6 +104,6 @@ def test_special_results():
     result = roll_skill_test(3, 10)
     assert isinstance(result.gandalf_rune, bool)
     assert isinstance(result.sauron_rune, bool)
-    
+
     # Test that they can't both be true at the same time
-    assert not (result.gandalf_rune and result.sauron_rune) 
+    assert not (result.gandalf_rune and result.sauron_rune)

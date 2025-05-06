@@ -75,42 +75,51 @@ poetry run tortools resolve-action --help
 
 ### Setting Up the Development Environment
 
-1. Install development dependencies:
+1. Install development dependencies and pre-commit hooks:
    ```bash
-   poetry install --with dev
+   ./scripts/dev.sh install
    ```
 
-2. Format code:
-   ```bash
-   poetry run black .
-   poetry run isort .
-   ```
+   This will:
+   - Install all project dependencies
+   - Install pre-commit hooks for code quality
 
-3. Type checking:
-   ```bash
-   poetry run mypy .
-   ```
+### Development Workflow
 
-### Dependency Management
+The project includes a development script (`scripts/dev.sh`) to help with common tasks:
 
-This project uses Poetry for dependency management. The dependencies are specified in `pyproject.toml`, and the exact versions are locked in `poetry.lock`.
+```bash
+# Run all checks (format, test, type-check)
+./scripts/dev.sh check
 
-When adding or updating dependencies:
+# Run tests only
+./scripts/dev.sh test
 
-1. Update dependencies in `pyproject.toml`
-2. Update the lock file:
-   ```bash
-   poetry lock
-   ```
-3. Install the updated dependencies:
-   ```bash
-   poetry install
-   ```
+# Run type checking only
+./scripts/dev.sh type-check
 
-The lock file ensures that:
-- Everyone uses the same dependency versions
-- Builds are reproducible
-- CI environments match local development environments
+# Format code
+./scripts/dev.sh format
+
+# Show help
+./scripts/dev.sh help
+```
+
+### Code Quality
+
+This project uses pre-commit hooks to ensure code quality. The hooks will run automatically on each commit and:
+
+- Format code with black
+- Sort imports with isort
+- Remove trailing whitespace
+- Ensure files end with a newline
+- Check YAML syntax
+- Prevent large files from being committed
+
+To manually run the hooks on all files:
+```bash
+./scripts/dev.sh format
+```
 
 ### Testing
 
@@ -121,19 +130,8 @@ The project uses pytest for testing. Tests are located in the `tests/` directory
 - Tests use a fixed random seed for reproducibility
 
 To run the tests:
-
 ```bash
-# Run all tests
-poetry run pytest
-
-# Run tests with verbose output
-poetry run pytest -v
-
-# Run a specific test file
-poetry run pytest tests/test_mechanics.py
-
-# Run tests with coverage report
-poetry run pytest
+./scripts/dev.sh test
 ```
 
 The test suite includes:

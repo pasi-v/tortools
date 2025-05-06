@@ -70,10 +70,10 @@ if ! command -v poetry &> /dev/null; then
         print_error "Failed to install Poetry"
         exit 1
     fi
-    
+
     # Add Poetry to PATH for current session
     export PATH="$HOME/.local/bin:$PATH"
-    
+
     # Add Poetry to PATH permanently if not already there
     if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
         print_status "Adding Poetry to PATH..."
@@ -101,4 +101,4 @@ print_status "To start using the tools, run: poetry run tortools --help"
 print_status ""
 print_status "Note: If you just installed Poetry, you may need to:"
 print_status "1. Start a new shell session, or"
-print_status "2. Run: source ~/.bashrc (if using bash) or source ~/.zshrc (if using zsh)" 
+print_status "2. Run: source ~/.bashrc (if using bash) or source ~/.zshrc (if using zsh)"
