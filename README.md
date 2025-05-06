@@ -1,6 +1,6 @@
 # The One Ring RPG Tools (tortools)
 
-[![CI](https://github.com/yourusername/tortools/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/tortools/actions/workflows/ci.yml)
+[![CI](https://github.com/yourusername/tortools/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/yourusername/tortools/actions/workflows/ci.yml)
 
 A collection of command-line tools for The One Ring RPG game masters, helping with action resolution, combat simulation, and other game mechanics.
 
